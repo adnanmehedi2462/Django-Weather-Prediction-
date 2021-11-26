@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+
+</head>
+
+<body>
+
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                   (By Adnan) = What's the weather like?
+                </h1>
+            </div>
+        </div>
+    </section>
+    {% for message in messages %}
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="display:inline-block;text-align: center;right: 0; position: absolute;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+{% endfor %}
+<br>
+<br>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                {{form.name}}
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    Add City
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% for w in weather %}
+    <section class="section" style="">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="http://openweathermap.org/img/w/{{w.icon}}.png" alt="Image">
+                                </figure>
+                            </div>
+
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                  <span class="title">{{w.city}} ({{w.con}})</span>
+                                        <br>
+                                        <span><img src="https://i.ibb.co/nzGDXFf/Pngtree-heat-temperature-icon-isolated-on-5093159.png" style="height: 20px;width: auto;margin-right: 20px;"><span class="subtitle">{{w.temparature}}°F</span><br>
+                                        <span><img src="https://github.com/AnnaSmith3110/openWeather-API/blob/main/hot%20cold%20png.png?raw=true" style="height: 20px;width: auto;margin-right: 20px;"></span><span class="subtitle">{{w.feels_like}}°</span><br>
+                                         <span><img src="https://github.com/AnnaSmith3110/openWeather-API/blob/main/wind%20direction%20png.png?raw=true" style="height: 20px;width: auto;margin-right: 20px;"><span class="subtitle">{{w.wind}} Km/h</span><br>
+
+                                          <span><img src="https://github.com/AnnaSmith3110/openWeather-API/blob/main/visibility%20png.png?raw=true" style="height: 20px;width: auto;margin-right: 20px;"><span class="subtitle">{{w.vis}} m</span><br>
+
+
+                                        <br> <h2>{{w.discription}}</h2>
+                                    </p>
+                                </div>
+                            </div>
+                            <a class="media-right glyphicon glyphicon-trash" href="{% url 'mainapp:remove' city_name=w.city %}" style="color:red"></a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+    <footer class="footer">
+    </footer>
+
+</body>
+
+</html>
+
